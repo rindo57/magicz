@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cryptocurrency Donations</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #1e1e2f, #3a3a59);
+      color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .donation-container {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .donation-container h1 {
+      color: #ff79c6;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .crypto-section {
+      margin-top: 1.5rem;
+      text-align: left;
+    }
+
+    .crypto-section h2 {
+      font-size: 1.5rem;
+      margin-bottom:0rem;
+      color: #ff79c6;
+    }
+
+    .crypto-address {
+      background: #2c2c44;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .crypto-address span {
+      font-weight: bold;
+    }
+
+    .copy-button {
+      background: #0077cc;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 5px;
+    }
+
+    .copy-button:hover {
+      background: #005fa3;
+    }
+
+    .crypto-icon {
+      margin-right: 10px;
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
+    }
+
+    .crypto-details {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .crypto-details span {
+      margin-right: 10px;
+    }
+   /* New QR modal styles */
+    .qr-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .qr-content {
+      background: #2c2c44;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      position: relative;
+    }
+
+    .qr-content img {
+      max-width: 300px;
+      height: auto;
+      margin: 15px 0;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ff4757;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 0px;
+    }
+  </style>
+</head>
+<body>
+  <div class="donation-container">
+    <h1>Donate via Cryptocurrency</h1>
+    <div class="crypto-section">
+      <h2>Cryptocurrency Addresses</h2>
+<iframe src="https://trocador.app/anonpay/?ticker_to=btc&network_to=Mainnet&address=bc1qjqsc9fg9jagwfkn2kr6sed0stdh5lk7t27t4us&donation=True&simple_mode=True&name=H%21-Drive&buttonbgcolor=ff79c6&bgcolor=" width="300" height="290" style="border:0" scrolling="no"></iframe>
+      <div class="crypto-address">
+        <div class="crypto-details">
+          <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="Bitcoin Logo" class="crypto-icon">
+          <span>BTC:</span>
+          <span><code>bc1q4pacyvnrq3y0fqsku76yft0aa9y35xtsf40cg4</code></span>
+        </div>
+        <div class="button-group">
+          <button class="copy-button" onclick="copyToClipboard('bc1q4pacyvnrq3y0fqsku76yft0aa9y35xtsf40cg4')">Copy</button>
+          <button class="copy-button" onclick="showQR('https://i.kek.sh/TCjOw9FR472.png')">View QR</button>
+        </div>
+      </div>
+
+      <!-- SOL address remains unchanged -->
+    </div>
+  </div>
+
+  <!-- QR Modal -->
+  <div class="qr-modal" id="qrModal">
+    <div class="qr-content">
+      <button class="close-button" onclick="hideQR()">&times;</button>
+      <img id="qrImage" src="" alt="QR Code">
+    </div>
+  </div>
+
+  <script>
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Address copied to clipboard!');
+      }, () => {
+        alert('Failed to copy address.');
+      });
+    }
+
+    function showQR(imageUrl) {
+      const modal = document.getElementById('qrModal');
+      const qrImage = document.getElementById('qrImage');
+      qrImage.src = imageUrl;
+      modal.style.display = 'flex';
+    }
+
+    function hideQR() {
+      document.getElementById('qrModal').style.display = 'none';
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('qrModal');
+      if (event.target === modal) {
+        hideQR();
+      }
+    };
+  </script>
+  <!-- Cloudflare script remains unchanged -->
+</body>
+</html>
